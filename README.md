@@ -20,7 +20,7 @@ OfficeInstaller is a user-friendly WPF GUI tool designed to make the deployment 
 1. 📥 Clone this repository or download the zip file.
 
 ```git
-git clone <your-repo-url>
+git clone https://github.com/Paul1404/OfficeInstaller.git
 ```
 
 2. 🛠️ Open the solution in Visual Studio.
