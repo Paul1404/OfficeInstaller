@@ -20,15 +20,15 @@ using System.IO;
 
 namespace OfficeInstaller
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        private const string SetupUrl = "https://download.microsoft.com/download/2/7/A/27AF1BE6-DD20-4CB4-B154-EBAB8A7D4A7E/officedeploymenttool_16626-20148.exe";
+        private readonly string _localSetupPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "setup.exe");
+
         public MainWindow()
         {
             InitializeComponent();
-            _ = DownloadLatestSetupAsync(); // Using the _ = ... syntax to call the async method without awaiting it directly.
+            _ = DownloadLatestSetupAsync();
         }
 
         private void ChooseXmlButton_Click(object sender, RoutedEventArgs e)
@@ -46,21 +46,19 @@ namespace OfficeInstaller
 
         private async Task DownloadLatestSetupAsync()
         {
-            string setupUrl = "https://download.microsoft.com/download/2/7/A/27AF1BE6-DD20-4CB4-B154-EBAB8A7D4A7E/officedeploymenttool_16626-20148.exe";
-            string localPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "setup.exe");
-
-            using (HttpClient client = new HttpClient())
+            using (var client = new HttpClient())
             {
-                var response = await client.GetAsync(setupUrl);
+                try
+                {
+                    var response = await client.GetAsync(SetupUrl);
+                    response.EnsureSuccessStatusCode();
 
-                if (response.IsSuccessStatusCode)
-                {
                     var bytes = await response.Content.ReadAsByteArrayAsync();
-                    await File.WriteAllBytesAsync(localPath, bytes);
+                    await File.WriteAllBytesAsync(_localSetupPath, bytes);
                 }
-                else
+                catch (Exception ex)  // Catching a general exception for demonstration. It's a good practice to catch more specific exceptions.
                 {
-                    MessageBox.Show("An Error occured");
+                    MessageBox.Show($"An error occurred: {ex.Message}");
                 }
             }
         }
@@ -73,10 +71,16 @@ namespace OfficeInstaller
                 return;
             }
 
-            string setupPath = @"path\to\setup.exe";  // Modify this to the actual path of the ODT setup.exe
             string arguments = $"/configure \"{XmlPathTextBox.Text}\"";
 
-            Process.Start(setupPath, arguments);
+            try
+            {
+                Process.Start(_localSetupPath, arguments);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Installation failed: {ex.Message}");
+            }
         }
     }
 }
