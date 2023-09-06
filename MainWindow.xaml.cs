@@ -29,7 +29,28 @@ namespace OfficeInstaller
         {
             InitializeComponent();
             _ = DownloadLatestSetupAsync();
+            PopulateXmlFiles();
         }
+
+        private void PopulateXmlFiles()
+        {
+            string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string[] xmlFiles = Directory.GetFiles(appDirectory, "*.xml");
+
+            foreach (var xmlFile in xmlFiles)
+            {
+                XmlFilesComboBox.Items.Add(xmlFile);
+            }
+        }
+
+        private void XmlFilesComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (XmlFilesComboBox.SelectedItem != null)
+            {
+                XmlPathTextBox.Text = XmlFilesComboBox.SelectedItem.ToString();
+            }
+        }
+
 
         private void ChooseXmlButton_Click(object sender, RoutedEventArgs e)
         {
@@ -82,5 +103,12 @@ namespace OfficeInstaller
                 MessageBox.Show($"Installation failed: {ex.Message}");
             }
         }
+
+        private void ShowExeFolderButton_Click(object sender, RoutedEventArgs e)
+        {
+            string exeFolderPath = AppDomain.CurrentDomain.BaseDirectory;
+            Process.Start("explorer.exe", exeFolderPath);
+        }
+
     }
 }
