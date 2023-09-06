@@ -41,7 +41,7 @@ jobs:
         echo "::set-output name=commits::$COMMITS"
 
     - name: Zip published folder
-      run: zip -r Release.zip published/
+      run: zip -r Release.zip /bin/publish
 
     - name: Create Tag
       run: |
