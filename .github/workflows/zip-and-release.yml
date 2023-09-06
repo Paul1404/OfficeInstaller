@@ -48,7 +48,7 @@ jobs:
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
         git tag v${{ env.VERSION }}
-        git push origin v${{ env.VERSION }}
+        git push https://${{ secrets.MY_GITHUB_TOKEN }}@github.com/Paul1404/OfficeInstaller.git v${{ env.VERSION }}
       env:
         GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
 
