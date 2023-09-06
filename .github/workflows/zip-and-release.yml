@@ -1,0 +1,60 @@
+name: Create Tag, Zip Folder, and Release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '/bin/publish/**'
+  workflow_dispatch: # This lets you manually trigger the action
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Determine latest version
+      id: get_version
+      run: |
+        VERSION=$(ls published/Application\ Files/ | grep 'OfficeInstaller_' | sort -V | tail -n 1 | sed 's/OfficeInstaller_//g')
+        echo "Latest version is: $VERSION"
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+    - name: Get current date
+      id: current_time
+      run: echo "TIMESTAMP=$(date +'%d_%m_%Y')" >> $GITHUB_ENV
+
+    - name: Get commits since last release
+      id: get_commits
+      run: |
+        LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null)
+        if [ -z "$LAST_TAG" ]; then
+            # If no tags are found, list commits from the beginning
+            COMMITS=$(git log --pretty=format:"%s" | base64)
+        else
+            COMMITS=$(git log $LAST_TAG..HEAD --pretty=format:"%s" | base64)
+        fi
+        echo "::set-output name=commits::$COMMITS"
+
+    - name: Zip published folder
+      run: zip -r Release.zip published/
+
+    - name: Create Tag
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git tag v${{ env.VERSION }}
+        git push origin v${{ env.VERSION }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+
+    - name: Create Release and Upload Asset
+      run: |
+        gh release create v${{ env.VERSION }} ./Release.zip --title "Release v${{ env.VERSION }} for ${{ env.TIMESTAMP }}" --notes "Commits since last release:$(echo -e '\n\n')$(echo '${{ steps.get_commits.outputs.commits }}' | base64 --decode | sed 's/^/- /g')"
+      env:
+        GH_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+        GH_CLI_TRUSTED: "true"
