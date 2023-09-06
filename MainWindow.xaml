@@ -1,50 +1,115 @@
 ﻿<Window x:Class="OfficeInstaller.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Office Deployment Tool GUI" Height="172" Width="450" Icon="microsoft-office.ico">
+        Title="Office Deployment Tool GUI" Height="319" Width="786" Icon="microsoft-office.ico"
+        FontFamily="Segoe UI">
 
-    <!-- Styling -->
+    <!-- Styling for the buttons -->
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Background" Value="#0078D7"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Margin" Value="0,10,0,0"/>
+            <Setter Property="Padding" Value="12,5"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" Opacity="0.2" BlurRadius="4" Direction="270" ShadowDepth="2"/>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" Opacity="0.2" BlurRadius="4" Direction="270" ShadowDepth="2"/>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Effect">
+   <Setter.Value>
+      <DropShadowEffect Color="Black" Opacity="0.2" BlurRadius="4" Direction="270" ShadowDepth="2"/>
+   </Setter.Value>
+</Setter>
+
         </Style>
     </Window.Resources>
 
-    <!-- Layout -->
+    <!-- Layout Grid -->
     <Grid Margin="10">
-        <!-- Rows definition -->
+
+        <!-- Row definitions for layout control -->
         <Grid.RowDefinitions>
+            <!-- Row for the main title -->
             <RowDefinition Height="Auto"/>
-            <!-- Row for the label "Choose Configuration XML:" -->
+            <!-- Row for the label and ComboBox to select XMLs -->
             <RowDefinition Height="Auto"/>
-            <!-- Row for the ComboBox -->
-            <RowDefinition Height="Auto"/>
-            <!-- Row for the TextBox and Choose button -->
+            <!-- Row for the TextBox to display chosen XML path and button to manually select XML -->
             <RowDefinition Height="Auto"/>
             <!-- Row for the Install button -->
             <RowDefinition Height="Auto"/>
             <!-- Row for the Show Exe Folder button -->
+            <RowDefinition Height="Auto" MinHeight="26.96"/>
         </Grid.RowDefinitions>
 
+        <!-- Main title for better clarity -->
+        <TextBlock Text="Office Deployment Configuration" 
+                   FontWeight="Bold" 
+                   FontSize="20" 
+                   Grid.Row="0" 
+                   HorizontalAlignment="Center" 
+                   Margin="0,0,0,20" Width="314"/>
+
+        <!-- Label to indicate the purpose of the ComboBox below it -->
+        <TextBlock Text="Available Configuration XMLs:" 
+                   FontWeight="Bold" 
+                   Margin="0,4,0,1" 
+                   Grid.Row="1"/>
+
+        <!-- ComboBox to list available XML configurations. Displays file names using FileName property -->
+        <ComboBox x:Name="XmlFilesComboBox" 
+          Grid.Row="2" 
+          Margin="0,4,120,8" 
+          DisplayMemberPath="FileName" 
+          SelectionChanged="XmlFilesComboBox_SelectionChanged"></ComboBox>
 
 
-        <!-- Choose Configuration XML Label -->
-        <TextBlock Text="Choose Configuration XML:" FontWeight="Bold" Margin="0,0,0,10" Grid.Row="0"/>
+        <!-- Label for the TextBox to indicate its purpose -->
+        <TextBlock Text="Selected Configuration Path:" 
+                   FontWeight="Bold" 
+                   Margin="0,10,0,1" 
+                   Grid.Row="4"/>
 
-        <!-- TextBox and Choose XML Button -->
-        <TextBox x:Name="XmlPathTextBox" IsReadOnly="True" Grid.Row="1" HorizontalAlignment="Stretch" Margin="0,0,120,0"/>
-        <Button Content="Choose XML" Click="ChooseXmlButton_Click" Width="100" Grid.Row="1" HorizontalAlignment="Left" Margin="330,0,0,28" Grid.RowSpan="2"/>
+        <!-- TextBox to display path of the selected XML configuration -->
+        <TextBox x:Name="XmlPathTextBox" 
+                 IsReadOnly="True" 
+                 Grid.Row="4" 
+                 Margin="0,30,120,-22"/>
 
-        <ComboBox x:Name="XmlFilesComboBox" Grid.Row="1" HorizontalAlignment="Stretch" Margin="0,0,120,0" SelectionChanged="XmlFilesComboBox_SelectionChanged"/>
+        <!-- Button to open file dialog and manually choose XML configuration -->
+        <Button Content="Browse..." 
+                Click="ChooseXmlButton_Click" 
+                Width="100" 
+                Grid.Row="2" 
+                HorizontalAlignment="Right" 
+                Margin="0,2,15,8"/>
 
-        <!-- Install Office Button -->
-        <Button Content="Install Office" Width="200" Click="InstallOfficeButton_Click" Grid.Row="2" HorizontalAlignment="Center"/>
-        
-        <Button Content="Show Local Folder" Width="200" Click="ShowExeFolderButton_Click" Grid.Row="3" HorizontalAlignment="Center"/>
-        
+        <!-- Button to initiate Office Installation using the chosen XML configuration -->
+        <Button Content="Install Office using Configuration" 
+                Width="250" 
+                Click="InstallOfficeButton_Click" 
+                Grid.Row="4" 
+                HorizontalAlignment="Center" Margin="0,103,0,-95"/>
 
+        <!-- Button to open the folder containing the executable -->
+        <Button Content="Open Configuration Folder" 
+                Width="250" 
+                Click="ShowExeFolderButton_Click" 
+                Grid.Row="4" 
+                HorizontalAlignment="Center" Margin="0,133,0,-126"/>
     </Grid>
 </Window>
