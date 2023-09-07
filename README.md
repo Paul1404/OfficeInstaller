@@ -1,3 +1,16 @@
+# Disclaimer for OfficeInstaller
+
+**OfficeInstaller** is an independent project and has not been authorized, sponsored, or otherwise approved by Microsoft Corporation. 
+
+- **Not a Microsoft Product**: This project is not affiliated with, endorsed by, or connected to Microsoft Corporation. Any use of Microsoft's trademarks or references to its products are made under a 'fair use' understanding and do not imply endorsement or association between **OfficeInstaller** and Microsoft.
+  
+- **No Warranty**: The **OfficeInstaller** software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and non-infringement. In no event shall the authors or copyright holders be liable for any claim, damages, or other liability, whether in an action of contract, tort, or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.
+  
+- **Use at Your Own Risk**: By using **OfficeInstaller**, you understand that this tool is not a Microsoft product and might not adhere to the same standards, quality, and testing as an official Microsoft product. Use it at your own discretion and risk.
+  
+Microsoft®, Office®, and other Microsoft product names are trademarks or registered trademarks of Microsoft Corporation in the U.S. and other countries.
+
+
 # 🖥️ OfficeInstaller
 
 OfficeInstaller is a user-friendly WPF GUI tool designed to make the deployment of Microsoft Office a breeze, utilizing configuration XML files.
