@@ -31,7 +31,9 @@ jobs:
       
 
     - name: Zip published folder
-      run: zip -r Release.zip . -i bin/publish/
+      run: |
+        cd bin/publish
+        zip -r ../../Release.zip .
 
     - name: Create Tag
       run: |
