@@ -20,9 +20,10 @@ jobs:
     - name: Determine latest version
       id: get_version
       run: |
-        VERSION=$(ls published/Application\ Files/ | grep 'OfficeInstaller_' | sort -V | tail -n 1 | sed 's/OfficeInstaller_//g')
+        VERSION=$(ls bin/publish/Application\ Files/ | grep 'OfficeInstaller_' | sort -V | tail -n 1 | sed 's/OfficeInstaller_//g')
         echo "Latest version is: $VERSION"
         echo "VERSION=$VERSION" >> $GITHUB_ENV
+
 
     - name: Get current date
       id: current_time
