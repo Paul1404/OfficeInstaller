@@ -27,8 +27,13 @@ namespace OfficeInstaller
 
         private void ConfigureXmlButton_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://config.office.com/deploymentsettings");
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = "https://config.office.com/deploymentsettings",
+                UseShellExecute = true
+            });
         }
+
 
 
         private void PopulateXmlFiles()
