@@ -57,7 +57,7 @@ jobs:
 
     - name: Create Release and Upload Asset
       run: |
-        gh release create v${{ env.VERSION }} ./Release.zip --title "Release v${{ env.VERSION }} for ${{ env.TIMESTAMP }}" --notes "Commits since last release:$(echo -e '\n\n')$(echo '${{ steps.get_commits.outputs.commits }}' | base64 --decode | sed 's/^/- /g')"
+        gh release create v${{ env.VERSION }} ./Release.zip --title "Release v${{ env.VERSION }} for ${{ env.TIMESTAMP }}"
       env:
         GH_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
         GH_CLI_TRUSTED: "true"
