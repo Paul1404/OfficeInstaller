@@ -11,12 +11,14 @@
   <ItemGroup>
     <None Remove="checkmark.png" />
     <None Remove="form-background.jpg" />
+    <None Remove="install_icon.png" />
     <None Remove="microsoft-office.ico" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="checkmark.png" />
     <Resource Include="form-background.jpg" />
+    <Resource Include="install_icon.png" />
     <Resource Include="microsoft-office.ico" />
   </ItemGroup>
 

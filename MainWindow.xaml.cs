@@ -25,6 +25,12 @@ namespace OfficeInstaller
             PopulateXmlFiles();
         }
 
+        private void ConfigureXmlButton_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://config.office.com/deploymentsettings");
+        }
+
+
         private void PopulateXmlFiles()
         {
             var xmlFiles = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.xml")
@@ -125,6 +131,8 @@ namespace OfficeInstaller
         }
     }
 
+
+
     public class XmlFile
     {
         public string FileName { get; }
@@ -140,6 +148,7 @@ namespace OfficeInstaller
 
         public override string ToString() => FileName;
     }
+
 
     public static class XmlUtilities
     {
