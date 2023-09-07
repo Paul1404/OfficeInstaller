@@ -6,6 +6,8 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+    <ApplicationIcon>microsoft-office.ico</ApplicationIcon>
+    <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +15,10 @@
     <None Remove="form-background.jpg" />
     <None Remove="install_icon.png" />
     <None Remove="microsoft-office.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="microsoft-office.ico" />
   </ItemGroup>
 
   <ItemGroup>
