@@ -1,0 +1,52 @@
+name: Create Tag, Zip Folder, and Release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '/bin/publish/**'
+  workflow_dispatch: # This lets you manually trigger the action
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Determine latest version
+      id: get_version
+      run: |
+        VERSION=$(ls bin/publish/Application\ Files/ | grep 'OfficeInstaller_' | sort -V | tail -n 1 | sed 's/OfficeInstaller_//g')
+        echo "Latest version is: $VERSION"
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+
+    - name: Get current date
+      id: current_time
+      run: echo "TIMESTAMP=$(date +'%d_%m_%Y')" >> $GITHUB_ENV
+      
+
+    - name: Zip published folder
+      run: zip -r Release.zip . -i bin/publish/
+
+    - name: Create Tag
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git tag v${{ env.VERSION }}
+        git push origin v${{ env.VERSION }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+
+    - name: Create Release and Upload Asset
+      run: |
+        gh release create v${{ env.VERSION }} ./Release.zip --title "Release v${{ env.VERSION }} for ${{ env.TIMESTAMP }}"
+      env:
+        GH_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+        GH_CLI_TRUSTED: "true"
