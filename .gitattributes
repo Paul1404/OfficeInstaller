@@ -60,3 +60,5 @@
 *.deploy filter=lfs diff=lfs merge=lfs -text
 *.exe filter=lfs diff=lfs merge=lfs -text
 OfficeInstaller.exe filter=lfs diff=lfs merge=lfs -text
+bin/publish/Application[[:space:]]Files/OfficeInstaller_1_0_0_10/OfficeInstaller.exe.deploy filter=lfs diff=lfs merge=lfs -text
+bin/publish/Portable[[:space:]]Single[[:space:]]File/OfficeInstaller.exe filter=lfs diff=lfs merge=lfs -text
