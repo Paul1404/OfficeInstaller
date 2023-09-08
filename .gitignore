@@ -357,3 +357,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+bin/publish/Application Files/OfficeInstaller_1_0_0_10/OfficeInstaller.exe.deploy
+bin/publish/Portable Single File/OfficeInstaller.exe

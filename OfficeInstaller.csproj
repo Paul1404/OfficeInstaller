@@ -12,11 +12,18 @@
 
   <ItemGroup>
     <None Remove="checkmark.png" />
+    <None Remove="Example-Office-Config.xml" />
     <None Remove="form-background.jpg" />
     <None Remove="install_icon.png" />
     <None Remove="LICENSE.txt" />
     <None Remove="microsoft-office.ico" />
     <None Remove="README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Example-Office-Config.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
